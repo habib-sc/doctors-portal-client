@@ -4,7 +4,7 @@ import PrimaryButton from '../../Shared/Buttons/PrimaryButton';
 
 const BannerBody = () => {
     return (
-        <div class="hero py-20 shadow-lg border rounded-lg mb-20">
+        <div class="hero py-10 shadow-lg border rounded-lg mb-20">
             <div class="hero-content flex-col lg:flex-row px-0 lg:px-20">
                 <img src={treatmentImg} class="max-w-sm rounded-lg shadow-2xl" />
                 <div className='ml-0 lg:ml-20'>
