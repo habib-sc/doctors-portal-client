@@ -4,7 +4,7 @@ import Info from './Info/Info';
 
 const Home = () => {
     return (
-        <div className='container mx-auto'>
+        <div className='container mx-auto px-4'>
             <Banner></Banner>
             <Info></Info>
         </div>
