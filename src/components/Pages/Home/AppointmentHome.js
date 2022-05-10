@@ -6,7 +6,7 @@ import PrimaryButton from '../../Shared/Buttons/PrimaryButton';
 const AppointmentHome = () => {
     return (
         <div style={{background: `url(${appointmentImg})`}}>
-            <div className='container px-4 mb-20 mt-48'>
+            <div className='container px-4 mb-20 mt-36'>
                 <div class="flex justify-between items-center">
                     <div className='flex-1 hidden lg:block p-0 m-0'>
                         <img src={doctorImg} class="object-cover h-[600px]  mt-[-150px]" />
