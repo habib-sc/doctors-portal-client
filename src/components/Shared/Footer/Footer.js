@@ -3,8 +3,8 @@ import footerBg from '../../../assets/images/footer.png';
 
 const Footer = () => {
     return (
-        <footer className="bg-cover bg-center" style={{backgroundImage: `url(${footerBg})`}}>
-            <div className='container px-4 footer'>
+        <footer className="bg-cover bg-center mt-20" style={{backgroundImage: `url(${footerBg})`}}>
+            <div className='container px-4 footer py-10'>
                 <div>
                     <span className="footer-title">Services</span> 
                     <a className="link link-hover">Branding</a> 
