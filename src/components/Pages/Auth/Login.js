@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
 import Spinner from '../../Shared/Spinner/Spinner';
 import SocialAuth from './SocialAuth';
@@ -36,7 +36,7 @@ const Login = () => {
 
     return (
         <div className='container px-4'>
-            <div className='w-96 mx-auto flex flex-col justify-center mt-20 lg:mt-48'>
+            <div className='lg:w-96 mx-auto flex flex-col justify-center mt-20 lg:mt-48'>
                 <div className='rounded-lg border shadow-xl p-5 bg-gray-50'>
                     <h2 className='text-center text-2xl mt-2 mb-5'>Login</h2>
                     <form onSubmit={handleSubmit(handleLogin)}>
@@ -57,6 +57,10 @@ const Login = () => {
 
                         <button className='btn bg-gradient-to-r from-secondary to-primary text-white border-0 px-8 w-full'>Login</button>
                     </form>
+                    
+                    <p className='mt-2'>New In Doctors Portal? <Link to='/register' className='text-secondary'>Create New Account</Link></p>
+                    <p className=''>Forgot Password? <Link to='/password-reset' className='text-secondary'>Reset Now</Link></p>
+
                     <SocialAuth></SocialAuth>
                 </div>
             </div>
