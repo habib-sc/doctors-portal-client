@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
+import Spinner from '../../Shared/Spinner/Spinner';
 import SocialAuth from './SocialAuth';
 
 const Login = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
     const [
         signInWithEmailAndPassword,
@@ -17,15 +20,19 @@ const Login = () => {
         error,
       ] = useSignInWithEmailAndPassword(auth);
 
-      const handleLogin = data => {
-          signInWithEmailAndPassword(data.email, data.password);
-      };
+    const handleLogin = data => {
+        signInWithEmailAndPassword(data.email, data.password);
+    };
 
     useEffect( () => {
         if (user){
-            navigate('/');
+            navigate(from, { replace: true });
         }
-    }, [user, navigate]);
+    }, [user, navigate, from]);
+
+    if (loading) {
+        return <Spinner></Spinner>
+    }
 
     return (
         <div className='container px-4'>

@@ -3,6 +3,7 @@ import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-fireb
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
+import Spinner from '../../Shared/Spinner/Spinner';
 import SocialAuth from './SocialAuth';
 
 const Register = () => {
@@ -38,6 +39,10 @@ const Register = () => {
             navigate('/');
         }
     }, [user, navigate]);
+
+    if (loading || updating) {
+        return <Spinner></Spinner>
+    }
 
     return (
         <div className='container px-4'>

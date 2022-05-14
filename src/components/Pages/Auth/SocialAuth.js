@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
 import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
+import Spinner from '../../Shared/Spinner/Spinner';
 
 const SocialAuth = () => {
 
     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
     const handleGoogleLogin = () => {
         signInWithGoogle();
@@ -14,9 +17,13 @@ const SocialAuth = () => {
 
     useEffect( () => {
         if (user){
-            navigate('/');
+            navigate(from, { replace: true });
         }
-    }, [user, navigate]);
+    }, [user, navigate, from]);
+
+    if (loading) {
+        return <Spinner></Spinner>
+    }
 
     return (
         <div>
