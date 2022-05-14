@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import SocialAuth from './SocialAuth';
 
 const Login = () => {
 
@@ -8,7 +9,7 @@ const Login = () => {
 
     return (
         <div className='container px-4'>
-            <div className='w-96 h-[80vh] mx-auto flex flex-col justify-center'>
+            <div className='w-96 mx-auto flex flex-col justify-center mt-20 lg:mt-48'>
                 <div className='rounded-lg border shadow-xl p-5 bg-gray-50'>
                     <h2 className='text-center text-2xl mt-2 mb-5'>Login</h2>
                     <form onSubmit={handleSubmit(onSubmit)}>
@@ -28,12 +29,8 @@ const Login = () => {
                         <p className='text-red-500 mb-3 mt-[-8px]'>{errors.password?.type === 'maxLength' && "Maximum 6 character required !"}</p>
 
                         <button className='btn bg-gradient-to-r from-secondary to-primary text-white border-0 px-8 w-full'>Login</button>
-
-                        <div class="divider">OR</div>
-
-                        <button className='btn bg-gradient-to-r from-secondary to-primary text-white border-0 px-8 w-full'>Continue With Google</button>
-        
                     </form>
+                    <SocialAuth></SocialAuth>
                 </div>
             </div>
         </div>

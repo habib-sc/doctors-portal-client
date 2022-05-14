@@ -9,7 +9,8 @@ const Header = () => {
         <li><Link to='/reviews'>Reviews</Link></li>
         <li><Link to='/about'>About</Link></li>
         <li><Link to='/contact'>Contact</Link></li>
-        <li className='border rounded-lg'><Link to='/login'>Login</Link></li>
+        <li className='border rounded-lg mr-3 bg-primary text-white'><Link to='/login'>Login</Link></li>
+        <li className='border rounded-lg bg-secondary text-white'><Link to='/register'>SignUp</Link></li>
     </>
 
     return (
