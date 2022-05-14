@@ -1,17 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import auth from '../../../firebase.init';
 import SocialAuth from './SocialAuth';
 
 const Register = () => {
     const [passwordError, setPasswordError] = useState('');
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const handleRegister = data => {
+    const navigate = useNavigate();
+
+    const [
+        createUserWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useCreateUserWithEmailAndPassword(auth, {sendEmailVerification: true});
+
+    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+
+    // Handling Register 
+    const handleRegister = async data => {
         if (data.password !== data.confirmPassword) {
             setPasswordError('Password not matching with Confirm Password!');
             return;
         }
+
+        await createUserWithEmailAndPassword(data.email, data.password);
+        const displayName = data.name;
+        console.log(displayName);
+        await updateProfile({displayName});
         console.log(data);
     };
+
+    useEffect( () => {
+        if (user){
+            navigate('/');
+        }
+    }, [user, navigate]);
 
     return (
         <div className='container px-4'>

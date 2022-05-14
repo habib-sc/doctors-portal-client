@@ -1,18 +1,38 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import auth from '../../../firebase.init';
 import SocialAuth from './SocialAuth';
 
 const Login = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => console.log(errors.password);
+    const navigate = useNavigate();
+
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error,
+      ] = useSignInWithEmailAndPassword(auth);
+
+      const handleLogin = data => {
+          signInWithEmailAndPassword(data.email, data.password);
+      };
+
+    useEffect( () => {
+        if (user){
+            navigate('/');
+        }
+    }, [user, navigate]);
 
     return (
         <div className='container px-4'>
             <div className='w-96 mx-auto flex flex-col justify-center mt-20 lg:mt-48'>
                 <div className='rounded-lg border shadow-xl p-5 bg-gray-50'>
                     <h2 className='text-center text-2xl mt-2 mb-5'>Login</h2>
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <form onSubmit={handleSubmit(handleLogin)}>
                         <input type="email" placeholder="Email"
                             {...register("email", {required: true, pattern: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/i})}
                             className="input input-bordered input-primary w-full mb-3" 
