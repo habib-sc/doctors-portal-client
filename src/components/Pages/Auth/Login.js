@@ -15,14 +15,14 @@ const Login = () => {
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <input type="email" placeholder="Email"
                             {...register("email", {required: true, pattern: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/i})}
-                            class="input input-bordered input-primary w-full mb-3" 
+                            className="input input-bordered input-primary w-full mb-3" 
                         />
                         <p className='text-red-500 mb-3 mt-[-8px]'>{errors.email?.type === 'required' && "Email is required"}</p>
                         <p className='text-red-500 mb-3 mt-[-8px]'>{errors.email?.type === 'pattern' && "Invalid Email!"}</p>
 
                         <input type="password" placeholder="Password"
                            {...register("password", {required: true, minLength: 6, maxLength: 20})}
-                            class="input input-bordered input-primary w-full mb-3" 
+                            className="input input-bordered input-primary w-full mb-3" 
                         />
                         <p className='text-red-500 mb-3 mt-[-8px]'>{errors.password?.type === 'required' && "Password Required!"}</p>
                         <p className='text-red-500 mb-3 mt-[-8px]'>{errors.password?.type === 'minLength' && "Minimum 6 character required !"}</p>

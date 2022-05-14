@@ -6,9 +6,9 @@ import chairImg from '../../../assets/images/chair.png';
 
 const AppointmentBanner = ({selectedDate, setSelectedDate}) => {
     return (
-    <div class="hero min-h-[60vh]" style={{background: `url(${bannerBG})`}}>
-        <div class="hero-content flex-col lg:flex-row-reverse">
-            <img src={chairImg} class="max-w-sm rounded-lg shadow-2xl" alt='Medical checkup chair' />
+    <div className="hero min-h-[60vh]" style={{background: `url(${bannerBG})`}}>
+        <div className="hero-content flex-col lg:flex-row-reverse">
+            <img src={chairImg} className="max-w-sm rounded-lg shadow-2xl" alt='Medical checkup chair' />
             <div className='lg:mr-20'>
                 <DayPicker
                 mode="single"
