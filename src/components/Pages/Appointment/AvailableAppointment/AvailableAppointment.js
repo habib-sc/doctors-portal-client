@@ -26,7 +26,8 @@ const AvailableAppointment = ({selectedDate}) => {
                 </div>
             </div>
             {treatment &&
-                <BookingModal 
+                <BookingModal
+                    key={treatment._id}
                     treatment={treatment}
                     selectedDate={selectedDate}
                     setTreatment={setTreatment}

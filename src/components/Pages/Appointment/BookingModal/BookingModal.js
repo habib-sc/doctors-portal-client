@@ -1,20 +1,43 @@
 import { format } from 'date-fns';
 import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { toast } from 'react-toastify';
 import auth from '../../../../firebase.init';
 
 const BookingModal = ({treatment, selectedDate, setTreatment}) => {
-    const { name, slots } = treatment;
+    const { _id, name, slots } = treatment;
     const [user, loading, error] = useAuthState(auth);
 
     const handleBooking = e => {
         e.preventDefault();
-        const bookingDate = e.target.date.value;
-        const bookingSlot = e.target.slot.value;
-        const name = e.target.name.value;
-        const email = e.target.email.value;
-        const phone = e.target.phone.value;
-        console.log(bookingDate, bookingSlot, name, email, phone);
+        
+        const booking = {
+            treatmentId: _id,
+            treatment: treatment.name,
+            date: e.target.date.value,
+            slot: e.target.slot.value,
+            patientName: e.target.name.value,
+            email: e.target.email.value,
+            phone: e.target.phone.value
+        };
+        
+        fetch('http://localhost:5000/booking', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(booking)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                toast.success(`Appointment set on ${booking.date} at ${booking.slot}`);
+            }else{
+                toast.error(`Already have an appointment on ${booking.date} at ${booking.slot}`);
+            }
+
+        });
+        
         setTreatment(null);
     }
 
@@ -29,7 +52,7 @@ const BookingModal = ({treatment, selectedDate, setTreatment}) => {
                         <input type="text" name='date' disabled value={format(selectedDate, 'PP')} className="input input-bordered w-full max-w-xs mb-3 disabled:bg-gray-100 disabled:border-gray-300" />
                         <select name='slot' className="select select-secondary w-full max-w-xs mb-3">
                             {slots &&
-                                slots.map(slot => <option key={slot._id}>{slot}</option>)
+                                slots.map((slot, index) => <option key={index}>{slot}</option>)
                             }
                             
                         </select>
