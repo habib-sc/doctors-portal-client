@@ -1,19 +1,21 @@
 import { format } from 'date-fns';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useQuery } from 'react-query';
+import Spinner from '../../../Shared/Spinner/Spinner';
 import BookingModal from '../BookingModal/BookingModal';
 import ServiceCard from '../ServiceCard/ServiceCard';
 
 const AvailableAppointment = ({selectedDate}) => {
-    const [services, setServices] = useState([]);
     const [treatment, setTreatment] = useState({});
 
     const formatedDate = format(selectedDate, 'PP');
 
-    useEffect( () => {
-        fetch(`http://localhost:5000/available-services?date=${formatedDate}`)
-        .then(res => res.json())
-        .then(data => setServices(data));
-    }, [formatedDate]);
+    const {data: services, isLoading, refetch} = useQuery(['availableServices', formatedDate], () => fetch(`http://localhost:5000/available-services?date=${formatedDate}`)
+        .then(res => res.json()));
+
+    if (isLoading) {
+        return <Spinner></Spinner>
+    }
 
     return (
         <div>
@@ -23,7 +25,7 @@ const AvailableAppointment = ({selectedDate}) => {
             <div className='container px-4'>
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
                     {
-                        services.map(service => <ServiceCard key={service._id} service={service} setTreatment={setTreatment}></ServiceCard>)
+                        services?.map(service => <ServiceCard key={service._id} service={service} setTreatment={setTreatment}></ServiceCard>)
                     }
                 </div>
             </div>
@@ -33,6 +35,7 @@ const AvailableAppointment = ({selectedDate}) => {
                     treatment={treatment}
                     selectedDate={selectedDate}
                     setTreatment={setTreatment}
+                    refetch={refetch}
                 ></BookingModal>
             }
         </div>
