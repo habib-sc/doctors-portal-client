@@ -8,6 +8,9 @@ import Login from './components/Pages/Auth/Login';
 import Register from './components/Pages/Auth/Register';
 import RequireAuth from './components/Pages/Auth/RequireAuth';
 import ResetPassword from './components/Pages/Auth/ResetPassword';
+import Dashboard from './components/Pages/Dashboard/Dashboard';
+import MyAppointment from './components/Pages/Dashboard/MyAppointment';
+import MyReview from './components/Pages/Dashboard/MyReview';
 import Home from './components/Pages/Home/Home';
 import Header from './components/Shared/Header/Header';
 
@@ -18,11 +21,22 @@ function App() {
       <Routes>
         <Route path='/' element={<Home></Home>}></Route>
         <Route path='/about' element={<About></About>}></Route>
+
         <Route path='/appointment' element={
           <RequireAuth>
             <Appointment></Appointment>
           </RequireAuth>
         }></Route>
+
+        <Route path='/dashboard' element={
+          <RequireAuth>
+            <Dashboard></Dashboard>
+          </RequireAuth>
+        }>
+          <Route index element={<MyAppointment></MyAppointment>}></Route>
+          <Route path='/dashboard/review' element={<MyReview></MyReview>}></Route>
+        </Route>
+        
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/register' element={<Register></Register>}></Route>
         <Route path='/password-reset' element={<ResetPassword></ResetPassword>}></Route>
