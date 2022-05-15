@@ -15,6 +15,21 @@ const SocialAuth = () => {
         signInWithGoogle();
     };
 
+    if (user) {
+        const userInfo = { email: user.user.email }; 
+        fetch('http://localhost:5000/add-user', {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(userInfo)
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+        });
+    }
+
     useEffect( () => {
         if (user){
             navigate(from, { replace: true });

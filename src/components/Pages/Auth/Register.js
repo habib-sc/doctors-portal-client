@@ -33,7 +33,6 @@ const Register = () => {
     };
 
     if (user) {
-        console.log(user);
         const userInfo = { email: user.user.email }; 
         fetch('http://localhost:5000/add-user', {
             method: 'PUT',
