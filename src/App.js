@@ -12,6 +12,7 @@ import ResetPassword from './components/Pages/Auth/ResetPassword';
 import AddDoctor from './components/Pages/Dashboard/AddDoctor';
 import AllUsers from './components/Pages/Dashboard/AllUsers';
 import Dashboard from './components/Pages/Dashboard/Dashboard';
+import ManageDoctors from './components/Pages/Dashboard/ManageDoctors';
 import MyAppointment from './components/Pages/Dashboard/MyAppointment';
 import MyHistory from './components/Pages/Dashboard/MyHistory';
 import MyReview from './components/Pages/Dashboard/MyReview';
@@ -25,6 +26,9 @@ function App() {
       <Routes>
         <Route path='/' element={<Home></Home>}></Route>
         <Route path='/about' element={<About></About>}></Route>
+        <Route path='/login' element={<Login></Login>}></Route>
+        <Route path='/register' element={<Register></Register>}></Route>
+        <Route path='/password-reset' element={<ResetPassword></ResetPassword>}></Route>
 
         <Route path='/appointment' element={
           <RequireAuth>
@@ -54,12 +58,15 @@ function App() {
             </RequireAdmin>
           }></Route>
 
+          <Route path='/dashboard/manage-doctors' element={
+            <RequireAdmin>
+              <ManageDoctors></ManageDoctors>
+            </RequireAdmin>
+          }></Route>
+
         </Route>
         {/* Dashboard End  */}
         
-        <Route path='/login' element={<Login></Login>}></Route>
-        <Route path='/register' element={<Register></Register>}></Route>
-        <Route path='/password-reset' element={<ResetPassword></ResetPassword>}></Route>
       </Routes>
       <ToastContainer />
     </div>
