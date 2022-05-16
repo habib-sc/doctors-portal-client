@@ -14,7 +14,7 @@ const Dashboard = () => {
                 <input id="dashboard-sidebar" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content flex flex-col">
                     {/* <!-- Page content here --> */}
-                    <label for="dashboard-sidebar" className="btn btn-secondary rounded-lg lg:hidden drawer-button w-[50px]">
+                    <label htmlFor="dashboard-sidebar" className="btn btn-secondary rounded-lg lg:hidden drawer-button w-[50px]">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
                     </label>
                     <h2 className='text-3xl text-secondary font-semibold'>Welcome to Dashboard</h2>
@@ -22,7 +22,7 @@ const Dashboard = () => {
                 
                 </div> 
                 <div className="drawer-side shadow-lg">
-                    <label for="dashboard-sidebar" className="drawer-overlay"></label> 
+                    <label htmlFor="dashboard-sidebar" className="drawer-overlay"></label> 
                     <ul className="menu p-4 overflow-y-auto w-48 bg-base-100 text-base-content">
                     {/* <!-- Sidebar content here --> */}
                     <li><Link to='/dashboard'>My Dashboard</Link></li>

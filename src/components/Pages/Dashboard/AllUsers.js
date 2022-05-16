@@ -39,9 +39,9 @@ const AllUsers = () => {
 
     return (
         <div>
-            <div class="overflow-x-auto px-4">
+            <div className="overflow-x-auto px-4">
                 <h2 className='my-3 text-xl font-semibold'>Total Users: {users?.length}</h2>
-                <table class="table w-full">
+                <table className="table w-full">
                     {/* <!-- head --> */}
                     <thead >
                         <tr>
