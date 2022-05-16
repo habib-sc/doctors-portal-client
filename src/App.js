@@ -9,6 +9,7 @@ import Register from './components/Pages/Auth/Register';
 import RequireAdmin from './components/Pages/Auth/RequireAdmin';
 import RequireAuth from './components/Pages/Auth/RequireAuth';
 import ResetPassword from './components/Pages/Auth/ResetPassword';
+import AddDoctor from './components/Pages/Dashboard/AddDoctor';
 import AllUsers from './components/Pages/Dashboard/AllUsers';
 import Dashboard from './components/Pages/Dashboard/Dashboard';
 import MyAppointment from './components/Pages/Dashboard/MyAppointment';
@@ -31,6 +32,7 @@ function App() {
           </RequireAuth>
         }></Route>
 
+        {/* Dashboard route start  */}
         <Route path='/dashboard' element={
           <RequireAuth>
             <Dashboard></Dashboard>
@@ -39,12 +41,21 @@ function App() {
           <Route index element={<MyAppointment></MyAppointment>}></Route>
           <Route path='/dashboard/review' element={<MyReview></MyReview>}></Route>
           <Route path='/dashboard/my-history' element={<MyHistory></MyHistory>}></Route>
+
           <Route path='/dashboard/all-users' element={
             <RequireAdmin>
               <AllUsers></AllUsers>
             </RequireAdmin>
           }></Route>
+
+          <Route path='/dashboard/add-doctor' element={
+            <RequireAdmin>
+              <AddDoctor></AddDoctor>
+            </RequireAdmin>
+          }></Route>
+
         </Route>
+        {/* Dashboard End  */}
         
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/register' element={<Register></Register>}></Route>
