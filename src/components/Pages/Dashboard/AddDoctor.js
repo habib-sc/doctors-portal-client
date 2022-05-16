@@ -1,12 +1,43 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useQuery } from 'react-query';
+import Spinner from '../../Shared/Spinner/Spinner';
 
 const AddDoctor = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
+    const { data: services, isLoading } = useQuery('specialty', () => fetch('http://localhost:5000/services').then(res => res.json()));
+
     const handleAddDoctor = data => {
+        const image = data.image[0];
+        const formData = new FormData();
+        formData.append('image', image);
+
+        // Sending image to image bb server 
+        const url = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_IMAGE_STORAGE_KEY}`;
+        fetch(url, {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(result => {
+            if(result.success){
+                const img = result.data.url;
+                const doctorInfo = {
+                    name: data.name,
+                    email: data.email,
+                    specialty: data.specialty,
+                    img: img
+                };
+                
+            }
+        });
         console.log(data);
     };
+
+    if (isLoading) {
+        return <Spinner></Spinner>
+    }
 
     return (
         <div className='px-4'>
@@ -32,11 +63,23 @@ const AddDoctor = () => {
                         <p className='text-red-500 mb-3 mt-[-8px]'>{errors.email?.type === 'pattern' && "Invalid Email!"}</p>
 
                         {/* specilty  */}
-                        <input type="text" placeholder="Specilty"
-                           {...register("specilty", {required: true})}
+                        <select 
+                        {...register("specialty")}
+                        className="select select-primary w-full mb-3">
+                            {
+                                services.map(service => <option 
+                                    key={service._id}
+                                    value={service.name}
+                                    >{service.name}</option>)
+                            }
+                        </select>
+
+                        {/* Photo  */}
+                        <input type="file"
+                            {...register("image", {required: true })}
                             className="input input-bordered input-primary w-full mb-3" 
                         />
-                        <p className='text-red-500 mb-3 mt-[-8px]'>{errors.specilty?.type === 'required' && "Specilty is required"}</p>
+                        <p className='text-red-500 mb-3 mt-[-8px]'>{errors.image?.type === 'required' && "Image is required"}</p>
 
                         <button className='btn bg-gradient-to-r from-secondary to-primary text-white border-0 px-8 w-full'>Add</button>
                     </form>
