@@ -7,6 +7,11 @@ import auth from '../../../firebase.init';
 const Header = () => {
     const [user, loading, error] = useAuthState(auth);
 
+    const logOut = () => {
+        signOut(auth);
+        localStorage.removeItem('accessToken');
+    };
+
     const menuItems = <>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/appointment'>Appointment</Link></li>
@@ -21,7 +26,7 @@ const Header = () => {
                 <div className='flex justify-center items-center'>
                     <p className='border rounded-lg font-bold px-2 mr-3'>{user?.displayName}</p>
                 </div>
-                <button onClick={ () => signOut(auth) } className='border rounded-lg px-3'>Logout</button>
+                <button onClick={logOut} className='border rounded-lg px-3'>Logout</button>
             </>
             :
             <>

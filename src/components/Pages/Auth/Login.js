@@ -3,6 +3,7 @@ import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
+import useToken from '../../../hooks/useToken';
 import Spinner from '../../Shared/Spinner/Spinner';
 import SocialAuth from './SocialAuth';
 
@@ -20,15 +21,17 @@ const Login = () => {
         error,
       ] = useSignInWithEmailAndPassword(auth);
 
+    const [token] = useToken(user);
+
     const handleLogin = data => {
         signInWithEmailAndPassword(data.email, data.password);
     };
 
     useEffect( () => {
-        if (user){
+        if (token){
             navigate(from, { replace: true });
         }
-    }, [user, navigate, from]);
+    }, [token, navigate, from]);
 
     if (loading) {
         return <Spinner></Spinner>

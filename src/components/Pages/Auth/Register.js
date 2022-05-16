@@ -3,6 +3,7 @@ import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-fireb
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
+import useToken from '../../../hooks/useToken';
 import Spinner from '../../Shared/Spinner/Spinner';
 import SocialAuth from './SocialAuth';
 
@@ -20,6 +21,8 @@ const Register = () => {
 
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
 
+    const [token] = useToken(user);
+
     // Handling Register 
     const handleRegister = async data => {
         if (data.password !== data.confirmPassword) {
@@ -32,26 +35,11 @@ const Register = () => {
         await updateProfile({displayName});
     };
 
-    if (user) {
-        const userInfo = { email: user.user.email }; 
-        fetch('http://localhost:5000/add-user', {
-            method: 'PUT',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(userInfo)
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-        });
-    }
-
     useEffect( () => {
-        if (user){
+        if (token){
             navigate('/');
         }
-    }, [user, navigate]);
+    }, [token, navigate]);
 
     if (loading || updating) {
         return <Spinner></Spinner>
