@@ -19,10 +19,17 @@ const AllUsers = () => {
                 'authorization': `Bearer ${localStorage.getItem('accessToken')}`
             }
         })
-        .then(res => res.json())
+        .then(res => {
+            if (res.status === 403) {
+                toast.error('Not Allowed To Make Admin!');
+            }
+            return res.json();
+        })
         .then(data => {
-            toast.success('Successfully Assigned as Admin');
-            refetch();
+            if (data.modifiedCount > 0) {
+                toast.success('Successfully Assigned as Admin');
+                refetch();
+            }
         });
     };
 
