@@ -8,8 +8,10 @@ import Login from './components/Pages/Auth/Login';
 import Register from './components/Pages/Auth/Register';
 import RequireAuth from './components/Pages/Auth/RequireAuth';
 import ResetPassword from './components/Pages/Auth/ResetPassword';
+import AllUsers from './components/Pages/Dashboard/AllUsers';
 import Dashboard from './components/Pages/Dashboard/Dashboard';
 import MyAppointment from './components/Pages/Dashboard/MyAppointment';
+import MyHistory from './components/Pages/Dashboard/MyHistory';
 import MyReview from './components/Pages/Dashboard/MyReview';
 import Home from './components/Pages/Home/Home';
 import Header from './components/Shared/Header/Header';
@@ -35,6 +37,8 @@ function App() {
         }>
           <Route index element={<MyAppointment></MyAppointment>}></Route>
           <Route path='/dashboard/review' element={<MyReview></MyReview>}></Route>
+          <Route path='/dashboard/my-history' element={<MyHistory></MyHistory>}></Route>
+          <Route path='/dashboard/all-users' element={<AllUsers></AllUsers>}></Route>
         </Route>
         
         <Route path='/login' element={<Login></Login>}></Route>
