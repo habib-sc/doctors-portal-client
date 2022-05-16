@@ -6,6 +6,7 @@ import About from './components/Pages/About/About';
 import Appointment from './components/Pages/Appointment/Appointment';
 import Login from './components/Pages/Auth/Login';
 import Register from './components/Pages/Auth/Register';
+import RequireAdmin from './components/Pages/Auth/RequireAdmin';
 import RequireAuth from './components/Pages/Auth/RequireAuth';
 import ResetPassword from './components/Pages/Auth/ResetPassword';
 import AllUsers from './components/Pages/Dashboard/AllUsers';
@@ -38,7 +39,11 @@ function App() {
           <Route index element={<MyAppointment></MyAppointment>}></Route>
           <Route path='/dashboard/review' element={<MyReview></MyReview>}></Route>
           <Route path='/dashboard/my-history' element={<MyHistory></MyHistory>}></Route>
-          <Route path='/dashboard/all-users' element={<AllUsers></AllUsers>}></Route>
+          <Route path='/dashboard/all-users' element={
+            <RequireAdmin>
+              <AllUsers></AllUsers>
+            </RequireAdmin>
+          }></Route>
         </Route>
         
         <Route path='/login' element={<Login></Login>}></Route>
