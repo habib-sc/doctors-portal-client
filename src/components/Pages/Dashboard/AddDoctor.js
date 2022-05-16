@@ -1,13 +1,19 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
+import { toast } from 'react-toastify';
 import Spinner from '../../Shared/Spinner/Spinner';
 
 const AddDoctor = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
     const { data: services, isLoading } = useQuery('specialty', () => fetch('http://localhost:5000/services').then(res => res.json()));
 
+    if (isLoading) {
+        return <Spinner></Spinner>
+    }
+
+    // Handling adding doctor ==============================================================
     const handleAddDoctor = data => {
         const image = data.image[0];
         const formData = new FormData();
@@ -29,15 +35,30 @@ const AddDoctor = () => {
                     specialty: data.specialty,
                     img: img
                 };
+
+                // Send doctor info to database 
+                fetch('http://localhost:5000/add-doctor', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json',
+                        'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                    },
+                    body: JSON.stringify(doctorInfo)
+                })
+                .then(res => res.json())
+                .then(result => {
+                    if(result.insertedId) {
+                        toast.success('Doctor Added Successfully');
+                        reset();
+                    }
+                    else{
+                        toast.error('Faild To Add Doctor');
+                    }
+                });
                 
             }
         });
-        console.log(data);
     };
-
-    if (isLoading) {
-        return <Spinner></Spinner>
-    }
 
     return (
         <div className='px-4'>
