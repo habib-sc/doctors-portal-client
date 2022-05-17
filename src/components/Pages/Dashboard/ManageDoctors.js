@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
 import Spinner from '../../Shared/Spinner/Spinner';
+import DeleteConfirm from './DeleteConfirm';
 
 const ManageDoctors = () => {
+
+    const [deleteDoctor, setdeleteDoctor] = useState(null);
 
     const { data: doctors, isLoading, refetch } = useQuery('doctors', () => fetch('http://localhost:5000/doctors', {
         headers: {
@@ -27,6 +30,7 @@ const ManageDoctors = () => {
         .then(data => {
             if (data.deletedCount) {
                 toast.success('Deleted A Doctor Successfully');
+                setdeleteDoctor(null);
                 refetch();
             }
             else{
@@ -66,12 +70,22 @@ const ManageDoctors = () => {
                                 <th>{doctor.name}</th>
                                 <th>{doctor.specialty}</th>
                                 <th>{doctor.email}</th>
-                                <td><button onClick={ () => handleDoctorDelete(doctor.email) } className='btn btn-xs btn-error text-white'>Delete</button></td>
+                                <td>
+                                    <label onClick={ () => setdeleteDoctor(doctor)} htmlFor="my-modal-6" className="btn btn-xs btn-error text-white">Delet</label>
+                                </td>
                             </tr>)
                         }
                     </tbody>
                 </table>
             </div>
+            
+            {deleteDoctor &&
+                <DeleteConfirm 
+                deleteDoctor={deleteDoctor}
+                handleDoctorDelete={handleDoctorDelete}
+                ></DeleteConfirm>
+            }
+
         </div>
     );
 };
