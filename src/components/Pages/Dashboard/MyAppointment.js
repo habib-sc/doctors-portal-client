@@ -1,7 +1,7 @@
 import { signOut } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
 
 const MyAppointment = () => {
@@ -33,7 +33,7 @@ const MyAppointment = () => {
         <div>
             
             <div className="overflow-x-auto px-4">
-                <h2 className='my-3 text-xl font-semibold'>Total Items: {appointment.length}</h2>
+                <h2 className='my-3 text-xl font-semibold'>Total Appointments: {appointment.length}</h2>
                 <table className="table w-full">
                     {/* <!-- head --> */}
                     <thead >
@@ -43,6 +43,7 @@ const MyAppointment = () => {
                             <th className='bg-gray-200'>Treatment</th>
                             <th className='bg-gray-200'>Date</th>
                             <th className='bg-gray-200'>Time</th>
+                            <th className='bg-gray-200'>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,6 +54,10 @@ const MyAppointment = () => {
                                 <td>{a.treatment}</td>
                                 <td>{a.date}</td>
                                 <td>{a.slot}</td>
+                                <td>
+                                    {(a.price && !a.paid) && <Link to={`/dashboard/payment/${a._id}`}><button className='btn btn-xs btn-success text-white'>Pay</button></Link>}
+                                    {(a.price && a.paid) && <span className='bg-sky-200 px-2 pb-1 rounded-lg text-sm'>Paid</span>}
+                                </td>
                             </tr>)
                         }
                     </tbody>

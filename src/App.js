@@ -16,6 +16,7 @@ import ManageDoctors from './components/Pages/Dashboard/ManageDoctors';
 import MyAppointment from './components/Pages/Dashboard/MyAppointment';
 import MyHistory from './components/Pages/Dashboard/MyHistory';
 import MyReview from './components/Pages/Dashboard/MyReview';
+import Payment from './components/Pages/Dashboard/Payment';
 import Home from './components/Pages/Home/Home';
 import Header from './components/Shared/Header/Header';
 
@@ -45,6 +46,7 @@ function App() {
           <Route index element={<MyAppointment></MyAppointment>}></Route>
           <Route path='/dashboard/review' element={<MyReview></MyReview>}></Route>
           <Route path='/dashboard/my-history' element={<MyHistory></MyHistory>}></Route>
+          <Route path='/dashboard/payment/:id' element={<Payment></Payment>}></Route>
 
           <Route path='/dashboard/all-users' element={
             <RequireAdmin>
