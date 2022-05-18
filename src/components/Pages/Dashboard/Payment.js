@@ -1,7 +1,12 @@
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import Spinner from '../../Shared/Spinner/Spinner';
+import CheckoutForm from './CheckoutForm';
+
+const stripePromise = loadStripe(`${process.env.REACT_APP_STRIPE_PK}`);
 
 const Payment = () => {
     const { id } = useParams();
@@ -18,23 +23,27 @@ const Payment = () => {
         return <Spinner></Spinner>
     }
 
-    console.log(appointment);
-
     return (
         <div className='px-4'>
-            <div class="card bg-base-100 shadow-xl border mt-10">   
-                <div class="card-body">
+            <div className="card bg-base-100 shadow-xl border mt-10">   
+                <div className="card-body">
 
                     <h2 className='text-2xl text-secondary font-semibold'>Hello, {appointment.patientName}</h2>
                     <h2 className='text-2xl text-primary font-semibold'>Make payment for {appointment.treatment}</h2>
 
-                    <h2 class="card-title">Confirm your appointment on {appointment.date} at {appointment.slot}</h2>
+                    <h2 className="card-title">Confirm your appointment on {appointment.date} at {appointment.slot}</h2>
                     <p className='font-semibold bg-cyan-100 w-48 pl-1 pb-1 rounded-lg text-secondary'>Your payment is ${appointment.price}</p>
-                    <div class="card-actions">
-                    <button class="btn btn-primary text-white">Pay Now</button>
-                    </div>
                 </div>
             </div>
+
+            <div className="card lg:w-[500px] bg-base-100 shadow-xl border mt-5">   
+                <div className="card-body">
+                    <Elements stripe={stripePromise}>
+                        <CheckoutForm appointment={appointment} />
+                    </Elements>
+                </div>
+            </div>
+            
         </div>
     );
 };
